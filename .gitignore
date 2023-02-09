@@ -1,0 +1,9 @@
+.vs/
+*.exe
+config
+description
+hooks/
+info/
+*vcxproj*
+x64/
+*.txt
