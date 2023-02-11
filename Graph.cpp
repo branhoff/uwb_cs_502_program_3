@@ -82,33 +82,16 @@ void Graph::printEdges() {
    }
 }
 
-//void Graph::findShortestPath() {
-//   for (int i = 1; i <= size; i++) {
-//      vertices[i].data->setCost(INT_MAX);
-//   }
-//
-//   vertices[1].data->setCost(0);
-//
-//   priority_queue<Vertex*, std::vector<Vertex*>, std::greater<Vertex*>> heap;
-//   heap.push(vertices[1].data);
-//
-//   while (!heap.empty()) {
-//      VertexNode* currentVertex = heap.top();
-//      heap.pop();
-//
-//      int currentVertexIndex = currentVertex - vertices;
-//      if (currentVertex->visited) continue;
-//      currentVertex->visited = true;
-//
-//      for (EdgeNode* currentEdge = currentVertex->edgeHead; currentEdge != nullptr; currentEdge = currentEdge->nextEdge) {
-//         int destIndex = currentEdge->adjVertex;
-//         int newCost = currentVertex->cost + currentEdge->weight;
-//         if (vertices[destIndex].cost > newCost) {
-//            vertices[destIndex].cost = newCost;
-//            heap.push(&vertices[destIndex]);
-//         }
-//      }
-//   }
-//}
+void Graph::findShortestPath() {
+   for (int i = 1; i <= size; i++) {
+      vertices[i].data->setCost(INT_MAX);
+   }
+
+   vertices[1].data->setCost(0);
+
+   priority_queue<Vertex*, std::vector<Vertex*>, std::greater<Vertex*>> heap;
+   heap.push(vertices[1].data);
+
+}
 
 
