@@ -10,6 +10,8 @@ public:
 
    void printVertices();
 
+   void printEdges();
+
 private:
    static const int MAX_VERTICES = 101;
 

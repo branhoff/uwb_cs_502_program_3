@@ -56,18 +56,17 @@ void Graph::insertEdge(int src, int dest, int weight) {
    EdgeNode* newEdge = new EdgeNode;
    newEdge->adjVertex = dest;
    newEdge->weight = weight;
-   newEdge->nextEdge = nullptr;
-   if (previousEdge == nullptr) {
-      vertices[src].edgeHead = newEdge;
-      cout << "Created new edge from vertex " << src << " to vertex " << dest << endl;
-   }
-   else {
-      previousEdge->nextEdge = newEdge;
-      cout << "Inserted edge from vertex " << src << " to vertex " << dest << endl;
-   }
-   // Debug check
-   if (vertices[src].edgeHead->nextEdge != vertices[src].edgeHead) {
-      cout << "Error: nextEdge not set correctly." << endl;
-   }
+   newEdge->nextEdge = vertices[src].edgeHead;
+   vertices[src].edgeHead = newEdge;
+}
 
+void Graph::printEdges() {
+   for (int i = 1; i <= size; i++) {
+      EdgeNode* currentEdge = vertices[i].edgeHead;
+      while (currentEdge != nullptr) {
+         cout << i << " -> " << currentEdge->adjVertex
+            << " with weight " << currentEdge->weight << endl;
+         currentEdge = currentEdge->nextEdge;
+      }
+   }
 }

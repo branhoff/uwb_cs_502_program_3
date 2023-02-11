@@ -32,6 +32,7 @@ int main() {
    Graph G;
    G.buildGraph(infile1);
    G.printVertices();
+   G.printEdges();
 
    //for each graph, find the shortest path from every node to all other nodes
    //for (;;) {
