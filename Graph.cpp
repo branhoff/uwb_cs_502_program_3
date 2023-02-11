@@ -106,6 +106,21 @@ void Graph::printVertices() {
    }
 }
 
+//------------------------------- printEdges -------------------------------
+// Prints all of the edges in the graph.
+// Preconditions: The graph must be initialized with vertices and edges.
+// Postconditions: All of the edges in the graph are printed to the console.
+void Graph::printEdges() {
+   for (int i = 1; i <= size; i++) {
+      EdgeNode* currentEdge = vertices[i].edgeHead;
+      while (currentEdge != nullptr) {
+         cout << i << " -> " << currentEdge->adjVertex
+            << " with weight " << currentEdge->weight << endl;
+         currentEdge = currentEdge->nextEdge;
+      }
+   }
+}
+
 //-------------------------------- insertEdge ---------------------------------
 // Inserts an edge between two vertices of the graph
 // Preconditions:  The graph has been initialized with vertices, and `src` and `dest` are valid vertices in the graph.
@@ -138,21 +153,6 @@ void Graph::insertEdge(int src, int dest, int weight) {
 
    previousEdge->nextEdge = newEdge;
    newEdge->nextEdge = nullptr;   
-}
-
-//------------------------------- printEdges -------------------------------
-// Prints all of the edges in the graph.
-// Preconditions: The graph must be initialized with vertices and edges.
-// Postconditions: All of the edges in the graph are printed to the console.
-void Graph::printEdges() {
-   for (int i = 1; i <= size; i++) {
-      EdgeNode* currentEdge = vertices[i].edgeHead;
-      while (currentEdge != nullptr) {
-         cout << i << " -> " << currentEdge->adjVertex
-            << " with weight " << currentEdge->weight << endl;
-         currentEdge = currentEdge->nextEdge;
-      }
-   }
 }
 
 //-------------------------------- findShortestPath ----------------------------
@@ -293,7 +293,6 @@ string Graph::calcPath(int src, int dst) {
 //                The vertices have descriptions.
 // Postconditions: The method returns the description of the shortest path from 
 //                 the source vertex to the destination vertex.
-
 string Graph::getVerticesName(int src, int dst) {
    string desc = vertices[dst].data->getDescription();
    if (T[src][dst].path < 0) {
