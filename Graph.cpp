@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <queue>
 
 #include "Graph.h"
 
@@ -20,17 +21,18 @@ void Graph::buildGraph(ifstream& infile) {
       // get descriptions of vertices
       for (int v = 1; v <= size; v++) {
          getline(infile, description);
+         vertices[v].edgeHead = nullptr;
          vertices[v].data = new Vertex(description);
          //infile >> *vertices[v].data;
       }
    // fill cost edge array
-   /*int src = 1, dest = 1, weight = 1;
+   int src = 1, dest = 1, weight = 1;
    for (;;) {
       infile >> src >> dest >> weight;
       if (src == 0 || infile.eof())
          break;
       insertEdge(src, dest, weight);
-   }*/
+   }
 }
 
 void Graph::printVertices() {
@@ -43,21 +45,30 @@ void Graph::insertEdge(int src, int dest, int weight) {
    EdgeNode* currentEdge = vertices[src].edgeHead;
    EdgeNode* previousEdge = nullptr;
 
-   while (currentEdge != nullptr && currentEdge->adjVertex != dest) {
+   // check if dst exists
+
+   while (currentEdge != nullptr ) {
+      if (currentEdge->adjVertex == dest) {
+         // replace weight
+         currentEdge->weight = weight;
+         return;
+      }
       previousEdge = currentEdge;
       currentEdge = currentEdge->nextEdge;
-   }
-
-   if (currentEdge != nullptr) {
-      currentEdge->weight = weight;
-      return;
    }
 
    EdgeNode* newEdge = new EdgeNode;
    newEdge->adjVertex = dest;
    newEdge->weight = weight;
-   newEdge->nextEdge = vertices[src].edgeHead;
-   vertices[src].edgeHead = newEdge;
+
+   if (previousEdge == nullptr) { // update head
+      newEdge->nextEdge = vertices[src].edgeHead;
+      vertices[src].edgeHead = newEdge;
+      return;
+   }
+
+   previousEdge->nextEdge = newEdge;
+   newEdge->nextEdge = nullptr;   
 }
 
 void Graph::printEdges() {
@@ -70,3 +81,34 @@ void Graph::printEdges() {
       }
    }
 }
+
+//void Graph::findShortestPath() {
+//   for (int i = 1; i <= size; i++) {
+//      vertices[i].data->setCost(INT_MAX);
+//   }
+//
+//   vertices[1].data->setCost(0);
+//
+//   priority_queue<Vertex*, std::vector<Vertex*>, std::greater<Vertex*>> heap;
+//   heap.push(vertices[1].data);
+//
+//   while (!heap.empty()) {
+//      VertexNode* currentVertex = heap.top();
+//      heap.pop();
+//
+//      int currentVertexIndex = currentVertex - vertices;
+//      if (currentVertex->visited) continue;
+//      currentVertex->visited = true;
+//
+//      for (EdgeNode* currentEdge = currentVertex->edgeHead; currentEdge != nullptr; currentEdge = currentEdge->nextEdge) {
+//         int destIndex = currentEdge->adjVertex;
+//         int newCost = currentVertex->cost + currentEdge->weight;
+//         if (vertices[destIndex].cost > newCost) {
+//            vertices[destIndex].cost = newCost;
+//            heap.push(&vertices[destIndex]);
+//         }
+//      }
+//   }
+//}
+
+

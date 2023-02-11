@@ -12,6 +12,8 @@ public:
 
    void printEdges();
 
+   void findShortestPath();
+
 private:
    static const int MAX_VERTICES = 101;
 
