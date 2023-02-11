@@ -74,3 +74,5 @@ Download HW3.txt (the Canvas preview of this file may make it look like there ar
 
 Relevant module goals
 - Be able to implement shortest path algorithms in unweighted and positive-weighted directed graphs using either adjacency matrices or adjacency lists
+
+Reference: https://github.com/shyawnkarim/DijkstrasShortestPath/blob/master/graphl.cpp

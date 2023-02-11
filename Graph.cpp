@@ -91,16 +91,16 @@ void Graph::printEdges() {
 //                where T[i][j] represents the cost of the shortest path from vertex i to vertex j.
 void Graph::findShortestPath()
 {
-   for (int source = 1; source <= size; source++)
+   for (int i = 1; i <= size; i++)
    {
       for (int j = 1; j <= size; j++)
       {
-         T[source][j].dist = INT_MAX;
-         T[source][j].visited = false;
-         T[source][j].path = -1;        
+         T[i][j].dist = INT_MAX;
+         T[i][j].visited = false;
+         T[i][j].path = -1;        
       }
 
-      T[source][source].dist = 0;
+      T[i][i].dist = 0;
       
 
       int v = 0;  // smallest vertex
@@ -114,11 +114,11 @@ void Graph::findShortestPath()
           // pick the vertex with the smallest distance in visited node
          for (int j = 1; j <= size; j++)
          {
-            if (T[source][j].visited == false )
+            if (T[i][j].visited == false )
             {
-               if (T[source][j].dist < min_dist)
+               if (T[i][j].dist < min_dist)
                {
-                  min_dist = T[source][j].dist;
+                  min_dist = T[i][j].dist;
                   v = j;
                }
             }
@@ -129,7 +129,7 @@ void Graph::findShortestPath()
          }
 
          
-         T[source][v].visited = true;
+         T[i][v].visited = true;
 
          // iterate the adjus
          VertexNode node = vertices[v];
@@ -140,10 +140,10 @@ void Graph::findShortestPath()
             int u = curr->adjVertex;
             int weight = curr->weight;
 
-            if (T[source][v].dist + weight < T[source][u].dist && !T[source][u].visited)
+            if (T[i][v].dist + weight < T[i][u].dist && !T[i][u].visited)
             {
-               T[source][u].dist = T[source][v].dist + weight;
-               T[source][u].path = v;               
+               T[i][u].dist = T[i][v].dist + weight;
+               T[i][u].path = v;               
             }            
 
             curr = curr->nextEdge;
@@ -217,9 +217,4 @@ void Graph::display(int src, int dst)
       cout << setw(6) << left << "--";
       cout << endl;
    }
-
-   
-
-
-   
 }
