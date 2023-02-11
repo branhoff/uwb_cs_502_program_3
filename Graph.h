@@ -6,8 +6,13 @@ using namespace std;
 
 class Graph {
 public:
-   Graph();
-   ~Graph();
+   Graph(); // constructor
+   Graph(const Graph& g); // copy constructor
+
+   ~Graph(); // destructor
+
+   Graph& operator=(const Graph& g); // assign operator
+
    //-------------------------------- buildGraph ---------------------------------
    // Builds a graph by reading data from an ifstream
    // Preconditions:  infile has been successfully opened and the file contains
@@ -29,6 +34,8 @@ public:
 
    void displayAll();
    void display(int src, int dst);
+
+   
 
 private:
    static const int MAX_VERTICES = 101;
@@ -64,5 +71,7 @@ private:
 
    string calcPath(int src, int dst);
    string getVerticesName(int src, int dst);
+   void clear();
+   void copy(const Graph& g);
 };
 

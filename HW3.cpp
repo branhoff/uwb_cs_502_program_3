@@ -29,6 +29,7 @@ int main() {
       return 1;
    }
 
+   cout << "-----Testing Build Graph From File----" << endl;
    Graph G;
    G.buildGraph(infile1);
    G.printVertices();
@@ -36,6 +37,34 @@ int main() {
    G.findShortestPath();
    G.displayAll();
    G.display(2, 3);
+
+
+   cout << endl << "-----Testing Copy Constructor----" << endl;
+   Graph G1(G);
+   G1.printVertices();
+   G1.printEdges();
+   G1.findShortestPath();
+   G1.displayAll();
+   G1.display(2, 3);
+
+   cout << endl << "-----Testing Assign Operator----" << endl;
+   Graph G2;
+   G2 = G;
+   G2.printVertices();
+   G2.printEdges();
+   G2.findShortestPath();
+   G2.displayAll();
+   G2.display(2, 3);
+
+   cout << endl << "-----Testing Assign Operator with Self Assignment----" << endl;   
+   G2 = G2;
+   G2.printVertices();
+   G2.printEdges();
+   G2.findShortestPath();
+   G2.displayAll();
+   G2.display(2, 3);
+
+
 
    //for each graph, find the shortest path from every node to all other nodes
    //for (;;) {
