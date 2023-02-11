@@ -88,16 +88,83 @@ void Graph::printEdges() {
 // Precondition: The graph must be initialized with vertices and edges.
 // Postcondition: The shortest path is stored in a 2D table T[MAX_VERTICES][MAX_VERTICES], 
 //                where T[i][j] represents the cost of the shortest path from vertex i to vertex j.
-void Graph::findShortestPath() {
-   for (int i = 1; i <= size; i++) {
-      vertices[i].data->setCost(INT_MAX);
+void Graph::findShortestPath()
+{
+   for (int source = 1; source <= size; source++)
+   {
+      T[source][source].dist = 0;
+      T[source][source].visited = true;
+
+      for (int n = 1; n <= size; n++) // find neighbor nodes
+      {
+         if (C[source][n] != INT_MAX)
+         {
+            T[source][n].dist = C[source][n];
+            T[source][n].path = source;
+         }
+      }
+
+      int v = 0;  // smallest vertex
+
+      do  // find smallest weight
+      {
+         int min = INT_MAX;
+         v = 0;
+
+         for (int n = 1; n <= size; n++) // find closest child and continue search
+         {
+            if (!T[source][n].visited && (C[source][n] < min))
+            {
+               min = C[source][n];
+               v = n;
+            }
+         }
+
+         if (v == 0)
+         {
+            break;  // end loop
+         }
+
+         T[source][v].visited = true;  // node visited
+
+         for (int w = 1; w <= size; ++w)
+         {
+            if (T[source][w].visited)
+            {
+               continue;
+            }
+
+            if (C[v][w] == INT_MAX)
+            {
+               continue;
+            }
+
+            if (v == w)
+            {
+               continue;
+            }
+
+            if (T[source][w].dist > T[source][v].dist + C[v][w])
+            {
+               T[source][w].dist = T[source][v].dist + C[v][w];
+               T[source][w].path = v;
+            }
+         }
+      }
+
+      while (v != 0); // end loop
    }
-
-   vertices[1].data->setCost(0);
-
-   priority_queue<Vertex*, std::vector<Vertex*>, std::greater<Vertex*>> heap;
-   heap.push(vertices[1].data);
-
 }
 
+void Graph::displayAll() {
+   cout << "Shortest paths between all vertices:" << endl;
+   for (int i = 1; i <= size; i++) {
+      for (int j = 1; j <= size; j++) {
+         cout << T[i][j].dist << "\t";
+         cout << T[i][j].path << "\t";
+         cout << T[i][j].visited << "\t";
+      }
+      cout << endl;
+   }
+}
 

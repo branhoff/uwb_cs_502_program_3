@@ -25,6 +25,8 @@ public:
    //                where T[i][j] represents the cost of the shortest path from vertex i to vertex j.
    void findShortestPath();
 
+   void displayAll();
+
 private:
    static const int MAX_VERTICES = 101;
 
@@ -51,6 +53,7 @@ private:
    };
 
    int size; // number of vertices in the graph
+   int C[MAX_VERTICES][MAX_VERTICES];
    Table T[MAX_VERTICES][MAX_VERTICES];
    // stores visited, distance, path -
    // two dimensional in order to solve
