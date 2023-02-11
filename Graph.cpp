@@ -7,6 +7,42 @@
 
 using namespace std;
 
+Graph::Graph()
+{
+   for (int v = 1; v < MAX_VERTICES; v++)
+   {
+      vertices[v].data = nullptr;
+      vertices[v].edgeHead = nullptr;
+   }
+}
+
+Graph::~Graph()
+{
+   for (int v = 1; v <= size; v++)
+   {
+      if (vertices[v].data != nullptr)
+      {
+         delete vertices[v].data;
+         vertices[v].data = nullptr;
+      }
+
+      if (vertices[v].edgeHead != nullptr)
+      {
+         EdgeNode* curr = vertices[v].edgeHead;
+
+         while (curr != nullptr)
+         {
+            EdgeNode* next = curr->nextEdge;
+            delete curr;
+            curr = next;
+         }
+
+         vertices[v].edgeHead = nullptr;
+      }
+   }
+   size = 0;
+}
+
 //-------------------------------- buildGraph ---------------------------------
 // Builds a graph by reading data from an ifstream
 // Preconditions:  infile has been successfully opened and the file contains
@@ -169,14 +205,8 @@ void Graph::displayAll() {
          {
             cout << setw(6) << left << T[i][j].dist;
             // generate path
-            string path = "" + to_string(j);
-            int v = j;
-            while (T[i][v].path > 0)
-            {
-               path = to_string(T[i][v].path) + " " + path;
-               v = T[i][v].path;
-            }
-
+            string path = calcPath(i, j);
+          
             cout << path;
          }
          else
@@ -196,16 +226,8 @@ void Graph::display(int src, int dst)
    {
       cout << setw(6) << left << T[src][dst].dist;
 
-      string path = "" + to_string(dst);
-      string visited_vertices = vertices[dst].data->getDescription();
-
-      int v = dst;
-      while (T[src][v].path > 0)
-      {
-         path = to_string(T[src][v].path) + " " + path;
-         visited_vertices = vertices[T[src][v].path].data->getDescription() + "\n" + visited_vertices;
-         v = T[src][v].path;
-      }
+      string path = calcPath(src, dst);
+      string visited_vertices = getVerticesName(src, dst);
 
       cout << path;
       cout << endl;
@@ -217,4 +239,21 @@ void Graph::display(int src, int dst)
       cout << setw(6) << left << "--";
       cout << endl;
    }
+}
+
+string Graph::calcPath(int src, int dst)
+{
+   if (T[src][dst].path < 0)
+      return to_string(dst);
+
+   return calcPath(src, T[src][dst].path) + " " + to_string(dst);
+}
+
+string Graph::getVerticesName(int src, int dst)
+{
+   string desc = vertices[dst].data->getDescription();
+   if (T[src][dst].path < 0)
+      return desc;
+
+   return getVerticesName(src, T[src][dst].path) + "\n" + desc;
 }

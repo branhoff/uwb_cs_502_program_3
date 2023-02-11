@@ -6,6 +6,8 @@ using namespace std;
 
 class Graph {
 public:
+   Graph();
+   ~Graph();
    //-------------------------------- buildGraph ---------------------------------
    // Builds a graph by reading data from an ifstream
    // Preconditions:  infile has been successfully opened and the file contains
@@ -59,5 +61,8 @@ private:
    // stores visited, distance, path -
    // two dimensional in order to solve
    // for all sources
+
+   string calcPath(int src, int dst);
+   string getVerticesName(int src, int dst);
 };
 

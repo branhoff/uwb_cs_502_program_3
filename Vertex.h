@@ -10,6 +10,8 @@ private:
 
 public:
    Vertex(std::string desc) : m_description(desc) {}
+   
+
 
    std::string getDescription() const { return m_description; };
 
