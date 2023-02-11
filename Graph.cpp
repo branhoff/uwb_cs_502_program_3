@@ -82,6 +82,12 @@ void Graph::printEdges() {
    }
 }
 
+//-------------------------------- findShortestPath ----------------------------
+// Calculates and stores the shortest path from the starting vertex to all other 
+// vertices in the graph, using the Dijkstra's algorithm. 
+// Precondition: The graph must be initialized with vertices and edges.
+// Postcondition: The shortest path is stored in a 2D table T[MAX_VERTICES][MAX_VERTICES], 
+//                where T[i][j] represents the cost of the shortest path from vertex i to vertex j.
 void Graph::findShortestPath() {
    for (int i = 1; i <= size; i++) {
       vertices[i].data->setCost(INT_MAX);
