@@ -85,7 +85,18 @@ public:
    //                 visited along the way, is displayed on the console.
    void display(int src, int dst);
 
-   
+   //-------------------------------- insertEdge ---------------------------------
+   // Inserts an edge between two vertices of the graph
+   // Preconditions:  The graph has been initialized with vertices, and `src` and `dest` are valid vertices in the graph.
+   // Postconditions: An edge is inserted between the vertices `src` and `dest` with a weight of `weight`.
+   void insertEdge(int src, int dest, int weight);
+
+   //-------------------------------- removeEdge ---------------------------------
+   // Removes an edge from the graph
+   // Preconditions:  src and dst vertices must exist in the graph
+   //                 and have an edge between them
+   // Postconditions: The edge between src and dst vertices is removed from the graph
+   void removeEdge(int src, int dest);
 
 private:
    static const int MAX_VERTICES = 101;
@@ -101,12 +112,6 @@ private:
       Vertex* data; // store vertex data here
    };
 
-   //-------------------------------- insertEdge ---------------------------------
-   // Inserts an edge between two vertices of the graph
-   // Preconditions:  The graph has been initialized with vertices, and `src` and `dest` are valid vertices in the graph.
-   // Postconditions: An edge is inserted between the vertices `src` and `dest` with a weight of `weight`.
-   void insertEdge(int src, int dest, int weight);
-
    // array of VertexNodes
    VertexNode vertices[MAX_VERTICES];
    // table of information for Dijkstra's algorithm
@@ -117,7 +122,6 @@ private:
    };
 
    int size; // number of vertices in the graph
-   int C[MAX_VERTICES][MAX_VERTICES];
    Table T[MAX_VERTICES][MAX_VERTICES];
    // stores visited, distance, path -
    // two dimensional in order to solve

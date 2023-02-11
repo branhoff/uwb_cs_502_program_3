@@ -16,7 +16,6 @@ using namespace std;
 //    - T[i][j].dist set to INT_MAX for all i and j
 //    - T[i][j].visited set to false for all i and j
 //    - T[i][j].path set to -1 for all i and j
-//    - C[i][j] set to 0 for all i and j
 //    - size set to 0
 Graph::Graph() {
    for (int v = 1; v < MAX_VERTICES; v++) {
@@ -29,7 +28,6 @@ Graph::Graph() {
          T[i][j].dist = INT_MAX;
          T[i][j].visited = false;
          T[i][j].path = -1;
-         C[i][j] = 0;
       }
    }
    size = 0;
@@ -125,14 +123,14 @@ void Graph::printEdges() {
 // Inserts an edge between two vertices of the graph
 // Preconditions:  The graph has been initialized with vertices, and `src` and `dest` are valid vertices in the graph.
 // Postconditions: An edge is inserted between the vertices `src` and `dest` with a weight of `weight`.
-void Graph::insertEdge(int src, int dest, int weight) {
+void Graph::insertEdge(int src, int dst, int weight) {
    EdgeNode* currentEdge = vertices[src].edgeHead;
    EdgeNode* previousEdge = nullptr;
 
    // check if dst exists
 
    while (currentEdge != nullptr ) {
-      if (currentEdge->adjVertex == dest) {
+      if (currentEdge->adjVertex == dst) {
          // replace weight
          currentEdge->weight = weight;
          return;
@@ -142,7 +140,7 @@ void Graph::insertEdge(int src, int dest, int weight) {
    }
 
    EdgeNode* newEdge = new EdgeNode;
-   newEdge->adjVertex = dest;
+   newEdge->adjVertex = dst;
    newEdge->weight = weight;
 
    if (previousEdge == nullptr) { // update head
@@ -153,6 +151,31 @@ void Graph::insertEdge(int src, int dest, int weight) {
 
    previousEdge->nextEdge = newEdge;
    newEdge->nextEdge = nullptr;   
+}
+
+//-------------------------------- removeEdge ---------------------------------
+// Removes an edge from the graph
+// Preconditions:  src and dst vertices must exist in the graph
+//                 and have an edge between them
+// Postconditions: The edge between src and dst vertices is removed from the graph
+void Graph::removeEdge(int src, int dst) {
+   EdgeNode* currentEdge = vertices[src].edgeHead;
+   EdgeNode* previousEdge = nullptr;
+
+   while (currentEdge != nullptr) {
+      if (currentEdge->adjVertex == dst) {
+         if (previousEdge == nullptr) {
+            vertices[src].edgeHead = currentEdge->nextEdge;
+         }
+         else {
+            previousEdge->nextEdge = currentEdge->nextEdge;
+         }
+         delete currentEdge;
+         return;
+      }
+      previousEdge = currentEdge;
+      currentEdge = currentEdge->nextEdge;
+   }
 }
 
 //-------------------------------- findShortestPath ----------------------------

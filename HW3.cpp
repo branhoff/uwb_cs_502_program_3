@@ -64,6 +64,11 @@ int main() {
    G2.displayAll();
    G2.display(2, 3);
 
+   cout << endl << "-----Testing Removing Edge----" << endl;
+   G2.removeEdge(2, 3);
+   G2.displayAll();
+   G2.display(2, 3);
+
 
 
    //for each graph, find the shortest path from every node to all other nodes
