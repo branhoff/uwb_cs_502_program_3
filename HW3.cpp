@@ -35,6 +35,7 @@ int main() {
    G.printEdges();
    G.findShortestPath();
    G.displayAll();
+   G.display(2, 3);
 
    //for each graph, find the shortest path from every node to all other nodes
    //for (;;) {

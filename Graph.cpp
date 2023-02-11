@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <queue>
+#include <iomanip>
 
 #include "Graph.h"
 
@@ -92,79 +93,133 @@ void Graph::findShortestPath()
 {
    for (int source = 1; source <= size; source++)
    {
-      T[source][source].dist = 0;
-      T[source][source].visited = true;
-
-      for (int n = 1; n <= size; n++) // find neighbor nodes
+      for (int j = 1; j <= size; j++)
       {
-         if (C[source][n] != INT_MAX)
-         {
-            T[source][n].dist = C[source][n];
-            T[source][n].path = source;
-         }
+         T[source][j].dist = INT_MAX;
+         T[source][j].visited = false;
+         T[source][j].path = -1;        
       }
+
+      T[source][source].dist = 0;
+      
 
       int v = 0;  // smallest vertex
 
-      do  // find smallest weight
+      while (true) 
       {
-         int min = INT_MAX;
-         v = 0;
+         v = -1;
 
-         for (int n = 1; n <= size; n++) // find closest child and continue search
+         int min_dist = INT_MAX;
+         
+          // pick the vertex with the smallest distance in visited node
+         for (int j = 1; j <= size; j++)
          {
-            if (!T[source][n].visited && (C[source][n] < min))
+            if (T[source][j].visited == false )
             {
-               min = C[source][n];
-               v = n;
+               if (T[source][j].dist < min_dist)
+               {
+                  min_dist = T[source][j].dist;
+                  v = j;
+               }
             }
          }
 
-         if (v == 0)
-         {
-            break;  // end loop
+         if (v < 0) {
+            break;
          }
 
-         T[source][v].visited = true;  // node visited
+         
+         T[source][v].visited = true;
 
-         for (int w = 1; w <= size; ++w)
+         // iterate the adjus
+         VertexNode node = vertices[v];
+         EdgeNode* curr = node.edgeHead;
+
+         while (curr != nullptr)
          {
-            if (T[source][w].visited)
-            {
-               continue;
-            }
+            int u = curr->adjVertex;
+            int weight = curr->weight;
 
-            if (C[v][w] == INT_MAX)
+            if (T[source][v].dist + weight < T[source][u].dist && !T[source][u].visited)
             {
-               continue;
-            }
+               T[source][u].dist = T[source][v].dist + weight;
+               T[source][u].path = v;               
+            }            
 
-            if (v == w)
-            {
-               continue;
-            }
-
-            if (T[source][w].dist > T[source][v].dist + C[v][w])
-            {
-               T[source][w].dist = T[source][v].dist + C[v][w];
-               T[source][w].path = v;
-            }
+            curr = curr->nextEdge;
          }
+
       }
-
-      while (v != 0); // end loop
+     
    }
 }
 
 void Graph::displayAll() {
    cout << "Shortest paths between all vertices:" << endl;
+   cout << setw(30) << left << "Description" << setw(6) << left << "From" << setw(6) << left << "To" << setw(6) << left << "Dist" << "Path" << endl;
    for (int i = 1; i <= size; i++) {
-      for (int j = 1; j <= size; j++) {
-         cout << T[i][j].dist << "\t";
-         cout << T[i][j].path << "\t";
-         cout << T[i][j].visited << "\t";
-      }
-      cout << endl;
+      cout << vertices[i].data->getDescription() << endl;
+      for (int j = 1; j <= size; j++)
+      {
+         if (i == j)
+            continue;
+
+         cout << setw(30) << left << "" << setw(6) << left << i << setw(6) << left << j;
+         if (T[i][j].visited)
+         {
+            cout << setw(6) << left << T[i][j].dist;
+            // generate path
+            string path = "" + to_string(j);
+            int v = j;
+            while (T[i][v].path > 0)
+            {
+               path = to_string(T[i][v].path) + " " + path;
+               v = T[i][v].path;
+            }
+
+            cout << path;
+         }
+         else
+         {
+            cout << setw(6) << left << "--";
+         }
+
+         cout << endl;
+      }    
    }
 }
 
+void Graph::display(int src, int dst)
+{
+   cout << setw(6) << left << src << setw(6) << left << dst;
+   if (T[src][dst].visited)
+   {
+      cout << setw(6) << left << T[src][dst].dist;
+
+      string path = "" + to_string(dst);
+      string visited_vertices = vertices[dst].data->getDescription();
+
+      int v = dst;
+      while (T[src][v].path > 0)
+      {
+         path = to_string(T[src][v].path) + " " + path;
+         visited_vertices = vertices[T[src][v].path].data->getDescription() + "\n" + visited_vertices;
+         v = T[src][v].path;
+      }
+
+      cout << path;
+      cout << endl;
+      cout << visited_vertices;
+      cout << endl;
+   }
+   else
+   {
+      cout << setw(6) << left << "--";
+      cout << endl;
+   }
+
+   
+
+
+   
+}

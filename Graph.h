@@ -26,6 +26,7 @@ public:
    void findShortestPath();
 
    void displayAll();
+   void display(int src, int dst);
 
 private:
    static const int MAX_VERTICES = 101;
