@@ -1,3 +1,24 @@
+//--------------------------------------------------------------------
+// GRAPH.H
+// Declaration and definition of the Graph class
+// Author: [Your Name]
+//--------------------------------------------------------------------
+// Graph class:
+//   Implements a graph data structure and various graph algorithms
+//   using the following methods:
+//      Graph - constructor that initializes an empty graph
+//      ~Graph - destructor that deallocates memory used by the graph
+//      insertEdge - adds an edge to the graph
+//      removeEdge - removes an edge from the graph
+//      printEdges - displays all edges in the graph
+//      printVertices - displays all vertices in the graph
+//      displayAll - displays the shortest path between all vertices in the graph
+//   Assumptions:
+//      - The insertEdge method assumes that the src and dst vertex numbers are valid
+//      - The removeEdge method assumes that the edge to be removed exists in the graph
+//      - The input to the displayAll method should result in a connected graph
+//--------------------------------------------------------------------
+
 #pragma once
 #include <fstream>
 #include "Vertex.h"

@@ -1,3 +1,23 @@
+//------------------------------------------------------------
+// VERTEX.CPP
+// Declaration and definition of the Vertex class
+// Author: [Your Name]
+//------------------------------------------------------------
+// Vertex class:
+//   Implements the properties and methods of a Vertex in a graph.
+//   Using the following methods:
+//      Vertex - default constructor that initializes properties
+//      Vertex - constructor that takes a description as an argument
+//      ~Vertex - destructor
+//      getDescription - returns the description of the Vertex
+//      setDescription - sets the description of the Vertex
+//      getCost - returns the cost of the Vertex
+//      setCost - sets the cost of the Vertex
+//   Assumptions:
+//      - The input string for the Vertex constructor and setDescription method should not be empty
+//      - The cost value should be a non-negative integer
+//------------------------------------------------------------
+
 #pragma once
 
 #include <string>

@@ -66,8 +66,13 @@ int main() {
 
    cout << endl << "-----Testing Removing Edge----" << endl;
    G2.removeEdge(2, 3);
+   G2.removeEdge(1, 2);
+   G2.removeEdge(3, 4);
+   G2.findShortestPath();
    G2.displayAll();
    G2.display(2, 3);
+   G2.printEdges();
+   G2.printVertices();
 
 
 
